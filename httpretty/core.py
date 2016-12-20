@@ -381,17 +381,7 @@ class fakesock(object):
             self._bufsize = bufsize
 
             if self._entry:
-                t = threading.Thread(
-                    target=self._entry.fill_filekind, args=(self.fd,)
-                )
-                t.start()
-                if self.timeout == socket._GLOBAL_DEFAULT_TIMEOUT:
-                    timeout = None
-                else:
-                    timeout = self.timeout
-                t.join(timeout)
-                if t.isAlive():
-                    raise socket.timeout
+                self._entry.fill_filekind(self.fd)
 
             return self.fd
 
